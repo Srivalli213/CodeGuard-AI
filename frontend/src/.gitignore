@@ -1,0 +1,28 @@
+
+# Environment variables and API keys
+.env
+.env.*
+!.env.example
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+
+# Database
+*.db
+*.sqlite3
+
+# Node packages
+node_modules/
+dist/
+dist-ssr/
+
+# Logs
+*.log
+
+# Editor and system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
