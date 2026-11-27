@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import "./App.css";
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://codeguard-ai-gxha.onrender.com";
 
 function App() {
   const [code, setCode] = useState(
@@ -599,5 +599,3 @@ print(calculate_total(100, 2))`
 }
 
 export default App;
-
-
