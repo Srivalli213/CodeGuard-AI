@@ -25,13 +25,16 @@ app = FastAPI(
 )
 
 
+# Allow frontend websites to communicate with backend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://localhost:5174",
-        "http://127.0.0.1:5174"
+        "http://127.0.0.1:5174",
+        "https://code-guard-ai-elow.vercel.app",
+        "https://code-guard-ai-elow-ozkbvxx2p-nelapati-srivallis-projects.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -65,8 +68,10 @@ def health():
     }
 
 
+# Static Code Review
 @app.post("/review")
 def review_code(request: CodeRequest):
+
     if request.language.lower() != "python":
         raise HTTPException(
             status_code=400,
@@ -95,8 +100,10 @@ def review_code(request: CodeRequest):
     }
 
 
+# AI Code Explanation
 @app.post("/ai-explain")
 def ai_explain_code(request: CodeRequest):
+
     if request.language.lower() != "python":
         raise HTTPException(
             status_code=400,
@@ -144,8 +151,10 @@ def ai_explain_code(request: CodeRequest):
         )
 
 
+# AI Auto Fix
 @app.post("/auto-fix")
 def fix_code(request: CodeRequest):
+
     if request.language.lower() != "python":
         raise HTTPException(
             status_code=400,
@@ -194,8 +203,10 @@ def fix_code(request: CodeRequest):
         )
 
 
+# AI Unit Test Generator
 @app.post("/generate-tests")
 def create_unit_tests(request: CodeRequest):
+
     if request.language.lower() != "python":
         raise HTTPException(
             status_code=400,
@@ -231,16 +242,22 @@ def create_unit_tests(request: CodeRequest):
         )
 
 
+# Review History
 @app.get("/history")
 def review_history():
+
+    reviews = get_all_reviews()
+
     return {
-        "total_reviews": len(get_all_reviews()),
-        "history": get_all_reviews()
+        "total_reviews": len(reviews),
+        "history": reviews
     }
 
 
+# Individual Review History
 @app.get("/history/{review_id}")
 def review_history_details(review_id: int):
+
     review = get_review_by_id(review_id)
 
     if review is None:
@@ -250,3 +267,4 @@ def review_history_details(review_id: int):
         )
 
     return review
+
